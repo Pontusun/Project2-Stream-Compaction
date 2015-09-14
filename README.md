@@ -20,13 +20,14 @@ After optimizing the block sizes of each of the implementations for minimal run 
 
 ![](images/image1.png)
 
-* For the GPU Naive implemention, it need to invoke the kernal funciton for `ilog2ceil(x)` times and each time the input data memory and output data memory on the GPU need to be swapped. This should be the bottleneck. 
+* For the GPU Naive implemention, it needs to invoke the kernal funciton for `ilog2ceil(x)` times and each time the input data memory and output data memory on the GPU need to be swapped. This should be the bottleneck. 
 * For the GPU Work-Efficient implementation, it need to sweep up first and then sweep down, that means it will need to invoke both of them `ilog2ceil(x)` times, and each time the input and output data memory also need to be swapped. Besides, after the up-sweep, the result need to be copied to host memory to insert 0 and then copy to device memory. All these factors limits the performance of the Work-Efficient implementation.
+* For the Thrust's Implementation, since the run time is longer than all others, it is possible that there are time cosuming memory allocationa and memory copy operations inside it. While the time these operations in GPU Naive and GPU Work-Efficient are not included in the run time.
 
 
 ## Test Output:
 
-'''
+```
 ****************
 ** SCAN TESTS **
 ****************
@@ -85,4 +86,4 @@ GPU work-efficient scan time is 0.5802 ms
 GPU work-efficient scan time is 0.5833 ms 
     [   2   3   3   1   1   2   1   2   1   2   2   2   3 ...   1   3 ]
     passed 
-'''
+```
